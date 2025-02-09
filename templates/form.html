@@ -1,7 +1,13 @@
+{% extends "home.html" %}
 
+{% block title %}
+Generate your request
+{% endblock %}
+
+{% block content %}
 
 <h1>Generate your time off request</h1>
-<form action="/generate-doc" method="post">
+<form action="/generate-doc" method="POST">
     
     <label for="emp_name">Name:</label>
     <input type="text" id="emp_name" name="emp_name" required><br><br>
@@ -58,3 +64,5 @@
 
     <button type="submit">Generate and Download</button>
 </form>
+
+{% endblock %}

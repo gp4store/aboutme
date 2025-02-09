@@ -1,18 +1,25 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <title>TIMEOFF Request Generator</title> 
-</head> 
-<body> 
-<h1>TIMEOFF Request Generator</h1> 
-<p> {{ current_date_time }}</p>
-<br> 
- 
-   <nav> 
-        <a href="{{ url_for('form') }}">Generate your request</a> 
-        <a href="{{ url_for('past_request') }}">Old Requests</a> 
-    </nav> 
-</body> 
-</html>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Time Off Request{% endblock %}</title>
+</head>
+<body>
+
+    <h2>TIME OFF REQUEST</h2>
+    <p><h3>{{ current_date_time }}</h3></p>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('form') }}">Generate your request</a>
+        <a href="{{ url_for('past_request') }}">Past requests</a>
+    </nav>
+    
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+
+</body>
+</html>
