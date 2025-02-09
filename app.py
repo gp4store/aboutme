@@ -1,15 +1,29 @@
 from flask import Flask, render_template, request, send_file
 from docx import Document
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 
 # Path to the template file (Ensure 'template.docx' exists in the same directory)
 TEMPLATE_PATH = "template.docx"
 
+# Added on 02 09 2025
+
 @app.route('/')
 def home():
-    return render_template("index.html")
+    now = datetime.now()
+    formatted_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    return render_template("home.html", current_date_time=formatted_date_time)
+
+@app.route('/form')
+def form():
+    return render_template("form.html")
+
+@app.route('/past_request')
+def past_request():
+    return render_template("past_request.html")
+
 
 @app.route('/generate-doc', methods=['POST'])
 def generate_doc():
