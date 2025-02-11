@@ -6,9 +6,23 @@ Past requests
 
 {% block content %}
 
-<h1>TIMEOFF Request Generator</h1> 
-<p> {{ current_date_time }}</p>
-<p><h5>WORKING ON IT</h5></p>
+    <title>For your records</title>
+</head>
+<body>
+    <h1>Submit for your records</h1>
+    <form action="/records" method="POST">
+        
+        <label for="name">Time OFF used:</label>
+        <input type="text" id="name" name="pto" required><br>
+
+        <label for="email">Hours used:</label>
+        <input type="text" id="email" name="hours" required><br>
+
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
 
 {% endblock %}
 
