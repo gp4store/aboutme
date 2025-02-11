@@ -1,0 +1,40 @@
+{% extends "home.html" %}
+
+{% block title %}
+YOUR LOG
+{% endblock %}
+
+{% block content %}
+
+<html>
+<head>
+
+    <title>YOUR LOG</title>
+
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>PTO USED</th>
+                <th>HOURS USED</th>
+                <th>DATE SUBMITTED</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.ID }}</td>
+                <td>{{ user.PTO }}</td>
+                <td>{{ user.HOURS }}</td>
+                <td>{{ user.DATE}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
+
+{% endblock %}

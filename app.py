@@ -6,21 +6,20 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-
 db = SQLAlchemy(app)
 
 TEMPLATE_PATH = "template.docx"
-
 class FormData(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     PTO = db.Column(db.String(100), nullable=False)
     HOURS = db.Column(db.String(100), nullable=False)
+    DATE = db.Column(db.String(100), nullable=False)
     
-
-    def __init__(self, PTO, HOURS):
+    def __init__(self, PTO, HOURS, DATE):
         self.PTO = PTO
         self.HOURS = HOURS
+        self.DATE = DATE
 
 with app.app_context():
     db.create_all()
@@ -29,28 +28,30 @@ with app.app_context():
 def index():
     
     if request.method == 'POST':
-        
         name_pto = request.form['pto']
         hours_pto = request.form['hours']
-        Type_hours = FormData(name_pto, hours_pto)
-
+        date_pto = request.form['date']
+        Type_hours = FormData(name_pto, hours_pto, date_pto)
         db.session.add(Type_hours)
         db.session.commit()
 
         return redirect(url_for('success'))
-
     return render_template('past_requests.html')
 
-@app.route('/success')
+@app.route('/log')
+def log():
+    users = FormData.query.all()
+    return render_template("log.html", users=users)
+
+@app.route('/succes')
 def success():
-    return 'Form data submitted successfully!'
+    return render_template("data.html")
 
 @app.route('/')
 def home():
     now = datetime.now()
     formatted_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
     return render_template("home.html", current_date_time=formatted_date_time)
-
 
 @app.route('/past_request')
 def past_request():
@@ -104,14 +105,11 @@ def generate_doc():
             paragraph.text = paragraph.text.replace("{sick_start_date}", sick_start_date)
             paragraph.text = paragraph.text.replace("{sick_hours}", sick_hours)             
         
-      
         output_filename = "{name} - Time Off Request.docx".format(name = emp_name)
         doc.save(output_filename)
         return send_file(output_filename, as_attachment=True, download_name=output_filename)
-    
     except Exception as e:
         return f"Error generating document: {e}"
 
 if __name__ == '__main__':
-
     app.run(debug=True)
